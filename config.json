@@ -1,0 +1,72 @@
+{
+  "LoadConfiguration": {
+    "StylePolicyAction": [
+      {
+        "name": "Financieras_rule_EjecutaDesembolsoPrestamoRevolvente_Req_gatewayscript_0",
+        "Type": "gatewayscript",
+        "Input": "INPUT",
+        "GatewayScriptLocation": "local:///Financieras/EjecutaDesembolsoPrestamoRevolvente_1_Req.js",
+        "Output": "OUTPUT"
+      },
+      {
+        "name": "Financieras_rule_EjecutaDesembolsoPrestamoRevolvente_Res_gatewayscript_2",
+        "Type": "gatewayscript",
+        "Input": "INPUT",
+        "GatewayScriptLocation": "local:///Financieras/EjecutaDesembolsoPrestamoRevolvente_1_Res.js",
+        "Output": "OUTPUT"
+      }
+    ],
+    "StylePolicyRule": [
+      {
+        "name": "Financieras_rule_EjecutaDesembolsoPrestamoRevolvente_Req",
+        "mAdminState": "enabled",
+        "Actions": "Financieras_rule_EjecutaDesembolsoPrestamoRevolvente_Req_gatewayscript_0",
+        "Direction": "request-rule"
+      },
+      {
+        "name": "Financieras_rule_EjecutaDesembolsoPrestamoRevolvente_Res",
+        "Actions": "Financieras_rule_EjecutaDesembolsoPrestamoRevolvente_Res_gatewayscript_2",
+        "Direction": "response-rule"
+      }
+    ],
+    "Matching": [
+      {
+        "name": "MR_Financieras_EjecutaDesembolsoPrestamoRevolvente_Req",
+        "MatchRules": {
+          "Type": "url",
+          "Url": "/financieras/v1/ejecutadesembolsoprestamorevolvente",
+          "Method": "default"
+        }
+      },
+      {
+        "name": "MR_Financieras_EjecutaDesembolsoPrestamoRevolvente_Res",
+        "MatchRules": {
+          "Type": "xpath",
+          "XPATHExpression": "//Metadata/Control/Servicio[normalize-space(.) = 'EjecutaDesembolsoPrestamoRevolvente']",
+          "Method": "default"
+        }
+      }
+    ],
+    "StylePolicy": {
+      "name": "Financieras_policy",
+      "PolicyMaps": [
+        {
+          "Match": {
+            "value": "MR_Financieras_EjecutaDesembolsoPrestamoRevolvente_Req"
+          },
+          "Rule": {
+            "value": "Financieras_rule_EjecutaDesembolsoPrestamoRevolvente_Req"
+          }
+        },
+        {
+          "Match": {
+            "value": "MR_Financieras_EjecutaDesembolsoPrestamoRevolvente_Res"
+          },
+          "Rule": {
+            "value": "Financieras_rule_EjecutaDesembolsoPrestamoRevolvente_Res"
+          }
+        }
+      ]
+    }
+  }
+}
